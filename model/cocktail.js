@@ -25,7 +25,22 @@ async function getCocktailZutaten(cname) {
   };
 }
 
+async function getCocktailUnderPrice(preis) {
+  const { rows } = await db.query('SELECT cname, preis FROM cocktail WHERE preis <= $1', [preis]);
+  if (rows.length > 0)
+    return {
+      code: 200,
+      data: rows,
+    };
+  else
+    return {
+      code: 404,
+      data: `Es wurde kein Cocktail mit dem Preis unter ${preis} in der Datenbank gefunden`,
+    };
+}
+
 module.exports = {
   getCocktailsAll,
   getCocktailZutaten,
+  getCocktailUnderPrice,
 };
