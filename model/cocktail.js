@@ -39,8 +39,26 @@ async function getCocktailUnderPrice(preis) {
     };
 }
 
+async function deleteCocktail(cname) {
+  const { rows } = await db.query('SELECT * FROM cocktail WHERE cname = $1', [cname],);//Zuerst schauen ob es vorhanden ist
+  if (rows.length > 0) {
+    await db.query('DELETE FROM besteht WHERE cid = (SELECT cid FROM cocktail WHERE cname = $1)', [cname]);// Die Tabllen sind verbunden durch Joins daher muss schritweise vom Ursprung der table gelöscht
+    await db.query('DELETE FROM bestellt WHERE cid = (SELECT cid FROM cocktail WHERE cname = $1)', [cname]);
+    await db.query('DELETE FROM cocktail WHERE cname = $1', [cname]);
+    return {
+      code: 200,
+      data: 'Deleted',
+    };
+  }
+  return {
+    code: 404,
+    data: 'Not Found',
+  };
+}
+
 module.exports = {
   getCocktailsAll,
   getCocktailZutaten,
   getCocktailUnderPrice,
+  deleteCocktail
 };
