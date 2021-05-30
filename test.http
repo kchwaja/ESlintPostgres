@@ -6,3 +6,16 @@ GET http://127.0.0.1:3000/cocktails/6.5
 
 ###
 DELETE http://127.0.0.1:3000/cocktails/Adonis
+###
+POST http://127.0.0.1:3000/cocktails
+Content-Type: application/json
+
+{
+    "cname": "Apfel Tasche",
+    "preis": 0.50,
+    "zubereitung": "Apfelmuss",
+    "kid": 5,
+    "zgid": 5,
+    "sgid": 5
+}
+###
