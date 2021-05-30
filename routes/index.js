@@ -2,7 +2,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 
 const router = express.Router();
-const { getCocktailsAll, getCocktailZutaten, getCocktailUnderPrice, deleteCocktail, InsertCocktail } = require('../model/cocktail');
+const { getCocktailsAll, getCocktailZutaten, getCocktailUnderPrice, deleteCocktail, InsertCocktail,patchCocktail } = require('../model/cocktail');
 
 router.get(
   '/cocktails',
@@ -40,6 +40,14 @@ router.post(
   '/cocktails',
   asyncHandler(async (req, res) => {
     const result = await InsertCocktail(req.body);
+    res.status(result.code).json(result);
+  }),
+);
+
+router.patch(
+  '/cocktails/:cname',
+  asyncHandler(async (req, res) => {
+    const result = await patchCocktail(req.params.cname, req.body);
     res.status(result.code).json(result);
   }),
 );

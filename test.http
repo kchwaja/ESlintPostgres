@@ -19,3 +19,10 @@ Content-Type: application/json
     "sgid": 5
 }
 ###
+
+PATCH http://127.0.0.1:3000/cocktails/Rob Roy
+Content-Type: application/json
+
+{
+    "preis": 0.1
+}
